@@ -4,7 +4,7 @@
 #include <inference_engine.hpp>
 #include<vector>
 
-#include <vpu/vpu_plugin_config.hpp>
+#include <vpu/vpu_config.hpp>
 #include <cldnn/cldnn_config.hpp>
 
 #include "utils.h"
@@ -171,6 +171,8 @@ public:
 		
 		inferRequest->setInputs(input_item);
 		inferRequest->startAsync();
+
+		inferRequestsQueueServer_->waitAll();
 		return;
 	}
 
@@ -221,8 +223,7 @@ public:
 			}
 
 			if ((device == "MYRIAD") || (device == "HDDL")) {
-				ie_.SetConfig({ { CONFIG_KEY(LOG_LEVEL), CONFIG_VALUE(LOG_NONE) },
-							  { VPU_CONFIG_KEY(LOG_LEVEL), CONFIG_VALUE(LOG_WARNING) } }, device);
+				ie_.SetConfig({ { CONFIG_KEY(LOG_LEVEL), CONFIG_VALUE(LOG_NONE) } }, device);
 			}
 
 			if (device == "GPU") {

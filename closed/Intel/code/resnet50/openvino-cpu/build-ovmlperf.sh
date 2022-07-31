@@ -40,13 +40,13 @@ git clone https://github.com/openvinotoolkit/openvino.git ${OPENVINO_DIR}
 
 cd ${OPENVINO_DIR}
 
-git checkout releases/2021/4
+git checkout master
 git submodule update --init --recursive
 mkdir build && cd build
 
-cmake -DENABLE_VPU=OFF \
+cmake -DENABLE_INTEL_MYRIAD=OFF \
         -DTHREADING=OMP \
-    	-DENABLE_GNA=OFF \
+    	-DENABLE_INTEL_GNA=OFF \
     	-DENABLE_DLIA=OFF \
     	-DENABLE_TESTS=OFF \
 		-DENABLE_CLDNN=OFF \
@@ -56,7 +56,7 @@ cmake -DENABLE_VPU=OFF \
 	-DPYTHON_EXECUTABLE=`which python3` \
         ..
 
-TEMPCV_DIR=${OPENVINO_DIR}/inference-engine/temp/opencv_4*
+TEMPCV_DIR=${OPENVINO_DIR}/temp/opencv_4*
 OPENCV_DIRS=$(ls -d -1 ${TEMPCV_DIR} )
 export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${OPENCV_DIRS[0]}/opencv/lib
 
