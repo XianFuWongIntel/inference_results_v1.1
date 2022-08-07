@@ -171,9 +171,11 @@ public:
 		
 		inferRequest->setInputs(input_item);
 		inferRequest->startAsync();
-
-		inferRequestsQueueServer_->waitAll();
 		return;
+	}
+
+	void waitAsyncServer(){
+		inferRequestsQueueServer_->waitAll();
 	}
 
 	void load() {

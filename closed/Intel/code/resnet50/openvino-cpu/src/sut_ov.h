@@ -290,7 +290,9 @@ public:
                      
                         backend_ov_async_->predictAsyncServer(item);
                 }
-               
+
+                backend_ov_async_->waitAsyncServer();
+
                 ds->unloadQuerySamples(samples.data(),0);
                 
                  
